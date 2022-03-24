@@ -1,0 +1,94 @@
+header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  background-color: royalblue;
+  color: white;
+  font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+  font-size: 1.7vw;
+}
+
+section{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: auto;
+}
+
+html, body {
+    height: 100%;
+    background-color: rgb(42, 43, 43);
+  }
+  
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  
+  #chat {
+    height: auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    padding: 2vw;
+  }
+  
+  input {
+    width: 60vw;
+    border: 1px solid #ddd;
+    height: 5vw;
+    padding: 0 2vw;
+    font-size: 1.2vw;
+    border: 1px solid royalblue;
+    border-radius: 10px;
+  }
+  
+  button {
+    width: 60vw;
+    height: 5vw;
+    font-size: 1.5vw;
+    background: royalblue;
+    text-align: center;
+    line-height: 5vw;
+    font-weight: bold;
+    color: #FFF;
+    margin-top: 1vw;
+    border: none;
+    border-radius: 10px;
+  }
+  
+  .messages {
+    width: 60vw;
+    height: auto;
+    margin: 2vw 0;
+    border: 1px solid #ddd;
+    padding: 2vw;
+    border: 1px solid royalblue;
+    border-radius: 10px;
+    background-color: rgb(22, 21, 21);
+  }
+
+.message p span#Nome{
+    color: royalblue;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+}
+
+.message p#p1 span#Data{
+    color: rgb(255, 255, 255);
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 1vw;
+}
+.message p#p2{
+  color: rgb(255, 255, 255);
+  font-family: Arial, Helvetica, sans-serif;
+  
+}
+.message {
+  border: 1px solid royalblue;
+  border-radius: 10px;
+  padding: 2px;
+  margin-bottom: 8px;
+}

@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chat NodeJs</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.4.1/socket.io.js" integrity="sha512-MgkNs0gNdrnOM7k+0L+wgiRc5aLgl74sJQKbIWegVIMvVGPc1+gc1L2oK9Wf/D9pq58eqIJAxOonYPVE5UwUFA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <link rel="stylesheet" href="estilo.css">
+    <!--<link rel="stylesheet" href="./public/style.css">-->
+</head>
+<body>
+    <header>
+        Chat Interativo
+    </header>
+    <section>
+        <form id="chat">
+            <input type="text" id="idNome" name="username" placeholder="Digite o seu nome de usuario">
+            
+            <input type="text" id="idMessage" name="messege" placeholder="Digite a sua mensagem">
+            <div class="messages"> 
+            </div>
+            <button type="submit"s class="lg:dark:hover:bg-white">Enviar</button>
+        </form>
+    </section>
+    <script> 
+        var socket = io('http://localhost:3000');
+
+        function renderMensagem(mensagemObj){
+            $('.messages').append(`<div class="message"> <p id="p1"><span id="Nome"><strong>${mensagemObj.autor}</strong></span> <span id="Data"> - ${mensagemObj.dataActual}</span></p> <p id="p2">${mensagemObj.mensagem }</p> </div>`);
+        }
+
+        socket.on('mensagensAnteriores', function(mensagens){
+            mensagens.forEach(msg => {
+                renderMensagem(msg);
+            });
+        })
+
+        socket.on('receberMensagem', function(mensagem){
+            renderMensagem(mensagem);
+        });
+        $('#chat').submit(function(event){
+            event.preventDefault();
+
+            var autor = $('input[name=username]').val();
+            var mensagem = $('input[name=messege]').val();
+            var dataActual1 = new Date();
+            
+            if(autor.length && mensagem.length){
+                var mesagemObj = {
+                    dataActual: dataActual1.getHours().toString() + ":" + dataActual1.getMinutes().toString(),
+                    autor: autor,
+                    mensagem: mensagem,
+                };
+                renderMensagem(mesagemObj);
+                socket.emit('enviarMensagem', mesagemObj);
+            }
+        })
+    </script>
+</body>
+</html>
