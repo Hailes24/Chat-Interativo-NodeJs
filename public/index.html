@@ -32,7 +32,7 @@
         do{
             username = prompt("Entra com o seu nome: ");
         }while(!username)
-        $('.cabecalho').innerHTML = ' | ' + username; 
+        //$('.cabecalho').innerHTML = ' | ' + username; 
         socket.emit('entrou-na-conversa', username);
         socket.on('usuario-conectado', (newSocket) =>{
             newUser(newSocket, 'entrou');
@@ -45,6 +45,10 @@
             newDiv.innerHTML = content;
             $('.messages').append(newDiv);
         }
+
+        socket.on('usuario-desconectado', (user) => {
+            newUser(user, 'saio');
+        });
 
         function renderMensagem(mensagemObj){
             $('.messages').append(`<div class="message"> <p id="p1"><span id="Nome"><strong>${mensagemObj.autor}</strong></span> <span id="Data"> - ${mensagemObj.dataActual}</span></p> <p id="p2">${mensagemObj.mensagem }</p> </div>`);

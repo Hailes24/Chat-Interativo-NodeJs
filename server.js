@@ -30,6 +30,12 @@ io.on('connection', Socket => {
         Socket.broadcast.emit('usuario-conectado', username);
     });
 
+    Socket.on('disconnet', () => {
+        Socket.broadcast.emit('usuario-desconectado', user = users[Socket.id]);
+        //users = users.filter<u>(u => u != users[Socket.id]);
+        delete users[Socket.id];
+    })
+
     Socket.on('enviarMensagem', dados => {
         //console.log(dados);
         mensagens.push(dados);
