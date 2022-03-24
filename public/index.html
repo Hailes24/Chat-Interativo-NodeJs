@@ -11,21 +11,40 @@
     <!--<link rel="stylesheet" href="./public/style.css">-->
 </head>
 <body>
-    <header>
+    <header name="cabecalho">
         Chat Interativo
     </header>
     <section>
         <form id="chat">
-            <input type="text" id="idNome" name="username" placeholder="Digite o seu nome de usuario">
+            <!--<input type="text" id="idNome" name="username" placeholder="Digite o seu nome de usuario">-->
             
             <input type="text" id="idMessage" name="messege" placeholder="Digite a sua mensagem">
+            <button type="submit"s class="lg:dark:hover:bg-white">Enviar</button>
             <div class="messages"> 
             </div>
-            <button type="submit"s class="lg:dark:hover:bg-white">Enviar</button>
+            
         </form>
     </section>
+    <script src="/public/script.js"></script>
     <script> 
         var socket = io('http://localhost:3000');
+        var username;
+        do{
+            username = prompt("Entra com o seu nome: ");
+        }while(!username)
+        $('.cabecalho').innerHTML = ' | ' + username; 
+        socket.emit('entrou-na-conversa', username);
+        socket.on('usuario-conectado', (newSocket) =>{
+            newUser(newSocket, 'entrou');
+        });
+
+        function newUser(nome, estado){
+            let newDiv = document.createElement('div');
+            newDiv.classList.add('message2');
+            let content = `<p><b>${nome}</b> ${estado} no chat`;
+            newDiv.innerHTML = content;
+            $('.messages').append(newDiv);
+        }
 
         function renderMensagem(mensagemObj){
             $('.messages').append(`<div class="message"> <p id="p1"><span id="Nome"><strong>${mensagemObj.autor}</strong></span> <span id="Data"> - ${mensagemObj.dataActual}</span></p> <p id="p2">${mensagemObj.mensagem }</p> </div>`);
@@ -35,7 +54,11 @@
             mensagens.forEach(msg => {
                 renderMensagem(msg);
             });
-        })
+        });
+
+        socket.on('entrou-na-conversa', function(username){
+            
+        });
 
         socket.on('receberMensagem', function(mensagem){
             renderMensagem(mensagem);
@@ -43,7 +66,8 @@
         $('#chat').submit(function(event){
             event.preventDefault();
 
-            var autor = $('input[name=username]').val();
+            //var autor = $('input[name=username]').val();
+            var autor = username;
             var mensagem = $('input[name=messege]').val();
             var dataActual1 = new Date();
             

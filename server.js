@@ -18,11 +18,17 @@ aplicacao.use('/', (req, res) => {
 })
 
 let mensagens = [];
+let users = [];
 
 io.on('connection', Socket => {
     console.log(`socket conectado: ${Socket.id}`);
 
     Socket.emit('mensagensAnteriores', mensagens);
+
+    Socket.on('entrou-na-conversa', (username) =>{
+        users[Socket.id] = username;
+        Socket.broadcast.emit('usuario-conectado', username);
+    });
 
     Socket.on('enviarMensagem', dados => {
         //console.log(dados);
