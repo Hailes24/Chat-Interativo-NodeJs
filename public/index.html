@@ -16,24 +16,31 @@
     </header>
     <section>
         <form id="chat">
-            <!--<input type="text" id="idNome" name="username" placeholder="Digite o seu nome de usuario">-->
-            
             <input type="text" id="idMessage" name="messege" placeholder="Digite a sua mensagem">
-            <button type="submit"s class="lg:dark:hover:bg-white">Enviar</button>
-            <div class="messages"> 
-            </div>
-            
+            <button type="submit">Enviar</button>
+            <div class="messages"> </div>
         </form>
     </section>
-    <script src="/public/script.js"></script>
+    <footer class="footer">
+        <div class="social-container">
+            <p>Author: Hailes A. Maurício<br>
+            <ul class="social-icons">
+                <li><a href="https://github.com/Hailes24"><img src="./icons/icons8_github.ico" alt="GitHub"> GitHub</a></li>
+                <li><a href="https://gitlab.com/HailesMauricio04"><img src="./icons/icons8_gitlab.ico" alt="GitLab">GitLab</a></li>
+                <li><a href="https://www.linkedin.com/in/hailes-maur%C3%ADcio-066659217/"><img src="./icons/icons8_market_square.ico" alt="Linkedin">LinkedIn</a></li>
+                <li><a href="#"><img src="./icons/icons8_email.ico" alt="Email">hailes.antonio@mastercontas.com</a></li>
+            </ul>
+        </div>
+    </footer>
     <script> 
         var socket = io('http://localhost:3000');
         var username;
         do{
             username = prompt("Entra com o seu nome: ");
         }while(!username)
-        //$('.cabecalho').innerHTML = ' | ' + username; 
+
         socket.emit('entrou-na-conversa', username);
+        
         socket.on('usuario-conectado', (newSocket) =>{
             newUser(newSocket, 'entrou');
         });
@@ -41,7 +48,7 @@
         function newUser(nome, estado){
             let newDiv = document.createElement('div');
             newDiv.classList.add('message2');
-            let content = `<p><b>${nome}</b> ${estado} no chat`;
+            let content = `<p color=""><b><font color="white">${nome}</font></b> <font color="white"> - ${estado} no chat</font>`;
             newDiv.innerHTML = content;
             $('.messages').append(newDiv);
         }
@@ -70,7 +77,6 @@
         $('#chat').submit(function(event){
             event.preventDefault();
 
-            //var autor = $('input[name=username]').val();
             var autor = username;
             var mensagem = $('input[name=messege]').val();
             var dataActual1 = new Date();
